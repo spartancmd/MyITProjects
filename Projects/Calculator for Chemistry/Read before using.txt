@@ -1,0 +1,10 @@
+Damit das Programm richtig funktioniert, soll sie mit der Datei PSE.txt im gleichen Ort gelagert werden. Also z.B. in den gleichen Ordner.  
+Die Datei PSE.txt darf man nicht umbenennen, damit das Programm funktioniert. Die Datei PSE.txt enthält eine Tabelle mit den Elementen aus den Perioden System der Elemente. Es ist möglich, dass das Programm auf Betriebssysteme, die kein Windows sind und weniger als 64-bit haben, nicht funktioniert.
+
+Das Programm benutzt das sogenannte CLI (Command Line Interface), um mit dem Nutzer zu kommunizieren. Das heißt, dass es ein Programm in der Befehlszeile ist.  
+
+Um das Programm zu benutzten, muss man mithilfe von Eingabe in die Befehlszeile die Optionen auswählen. Dabei muss man beachten, dass die Eingabe passt. Z.B., wenn dort steht, dass man einen Wert eingeben soll, dann darf man keinen Text schreiben. In dem Fall wird dann das Programm nicht richtig funktionieren. 
+Man soll auch darauf achten, dass man bei Dezimalenzahlen anstatt von Komma, den Punkt verwendet. Also z.B nicht 1,5, sondern 1.5 
+
+Falls der Antivirus warnt, dass das Programm gefaehrlich ist, kann man ihn ignorieren. Das Programm soll keine Gefahr für das PC darstellen.
+   

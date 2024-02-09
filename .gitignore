@@ -1,0 +1,13 @@
+__pycache__
+*.pyc
+*.json
+
+*.exe
+*.out
+*.pp
+*.o
+*.obj
+*.i
+
+.vscode
+.idea
