@@ -16,7 +16,7 @@
 #include <vector>
 #include <cassert>
 #include <conio.h>
-#define DEBUG
+#define DEBUG	// Use when debugging
 
 #ifdef DEBUG
 void TestCases();
