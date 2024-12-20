@@ -1,5 +1,4 @@
 // TicTacToe
-//
 
 #include <iostream>
 #include "TicTacToe.hpp"
@@ -21,7 +20,7 @@ int main()
             std::cin >> choice;
 
             if (choice != 'y') {
-                return 0;
+                break;
             }
             
             game.emptyField();
