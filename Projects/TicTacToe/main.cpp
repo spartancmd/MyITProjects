@@ -1,6 +1,6 @@
 // TicTacToe
 
-// Programmed by Deniel
+// Programmed by Deniel.
 
 #include <iostream>
 #include <conio.h>
