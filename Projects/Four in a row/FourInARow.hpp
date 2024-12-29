@@ -21,11 +21,13 @@ private: // ********* METHODS decl. ********* //
     
     void switchPos(const char arrow);
 
-    void outputColumn(const char color); // horizontal column
+    void outputColumn(const char color) const; // horizontal column
 
     void outputCursor(); 
 
     bool spaceBelowFilled(unsigned line, unsigned row);
+
+    void outputLine(bool& fieldMarked, const unsigned line);
 
 public:
     
@@ -36,14 +38,12 @@ public:
     void fillField(const char sym);
 
     void outputField();
-
-    // void outputField(const unsigned sleepTime); // if sleeptime is set for animation
-
+    
     void choosePosition(); // start of the game // allows the player to choose the field
 
     int operateOnField(); // operates on the field depending on the position // returns 0 if successful, else 1
 
-    bool isVictory(); // check if the current player won
+    bool isVictory() const; // check if the current player won
 
     void changePlayer();
 };

@@ -1,10 +1,19 @@
 #include <iostream>
+#include <windows.h>
 #include "FourInARow.hpp"
 #include "ConsoleDecorations.hpp"
 
+void greeting(const unsigned durationMs) {
+    std::cout << ConsoleDecorations::setFontColor('y') << "\t\tGame: Four In A Row " << std::endl;
+    std::cout << ConsoleDecorations::setFontColor('g') << "\t\tProgrammed by Deniel on C++" << ConsoleDecorations::resetColor() << std::endl;
+    std::cout << "\t\tPlease wait..." << std::endl;
+    Sleep(durationMs);
+}
 
 int main() {
     FourInARow game{'y'};
+
+    greeting(5000);
 
     // where the game runs
     while (true) {  

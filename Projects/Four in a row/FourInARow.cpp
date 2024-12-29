@@ -19,7 +19,7 @@ void FourInARow::switchPos(const char arrow) {
     }
 }
 
-void FourInARow::outputColumn(const char color) {
+void FourInARow::outputColumn(const char color) const {
     std::cout << ConsoleDecorations::setBackgroundColor('b');
     std::cout << ' ';
     for (unsigned row = 0; row < maxRows; row++) {
@@ -53,6 +53,22 @@ bool FourInARow::spaceBelowFilled(unsigned line, unsigned row) {
     return false;
 }
 
+void FourInARow::outputLine(bool& fieldMarked, const unsigned line) {
+    for (unsigned row = 0; row < maxRows; row++) {  
+        if (!fieldMarked && row == pos.row && spaceBelowFilled(line, row)) {
+                std::cout << ConsoleDecorations::setBackgroundColor(playerColor);
+                fieldMarked = true;
+            }
+        if (field[line][row] == ' ') { // if the current space is empty 
+            std::cout << "   ";
+        }
+        else { 
+            std::cout << ConsoleDecorations::setFontColor(field[line][row]) << " O ";
+        }
+        std::cout << ConsoleDecorations::resetColor();
+    }   
+}
+
 // ********* public ********* //
 FourInARow::FourInARow() {
     fillField(' ');
@@ -75,25 +91,13 @@ void FourInARow::fillField(const char sym) {
 }
 
 void FourInARow::outputField() {
-    outputColumn('b');
     bool fieldMarked = false;
+    
+    outputColumn('b');
     for (unsigned line = 0; line < maxLines; line++) 
     {
         std::cout << ConsoleDecorations::setBackgroundColor('b') << ' ' << ConsoleDecorations::setBackgroundColor(0);
-        for (unsigned row = 0; row < maxRows; row++) 
-        {   
-            if (!fieldMarked && row == pos.row && spaceBelowFilled(line, row)) {
-                std::cout << ConsoleDecorations::setBackgroundColor(playerColor);
-                fieldMarked = true;
-            }
-            if (field[line][row] == ' ') { // if the current space is empty 
-                std::cout << "   ";
-            }
-            else { 
-                std::cout << ConsoleDecorations::setFontColor(field[line][row]) << " O ";
-            }
-            std::cout << ConsoleDecorations::resetColor();
-        }
+        outputLine(fieldMarked, line);
         std::cout << ConsoleDecorations::setBackgroundColor('b') << ' ' << ConsoleDecorations::setBackgroundColor(0) << std::endl;
     }
     outputColumn('b');
@@ -141,7 +145,7 @@ int FourInARow::operateOnField() {
     return 1; // Something went wrong
 }
 
-bool FourInARow::isVictory() {
+bool FourInARow::isVictory() const {
     unsigned cnt = 0;
     unsigned cnt2 = 0;
     
