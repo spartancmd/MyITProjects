@@ -11,7 +11,7 @@ void greeting(const unsigned durationMs) {
 }
 
 int main() {
-    FourInARow game{'y'};
+    FourInARow game{'y'}; // initializing the game with the yellow player
 
     greeting(5000);
 
