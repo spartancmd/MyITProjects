@@ -235,6 +235,9 @@ bool FourInARow::isFilled() const {
 }
 
 int FourInARow::setCntFilledSlots(const unsigned newCnt) {
+    if (newCnt < 0)
+        return 1;
+
     cntFilledSlots = newCnt;
 
     return 0;
