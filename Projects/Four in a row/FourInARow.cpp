@@ -138,6 +138,8 @@ int FourInARow::operateOnField() {
     for (unsigned line = 0; line < maxLines; line++) {
         if (spaceBelowFilled(line, pos.row)) {
             field[line][pos.row] = playerColor;
+            cntFilledSlots++;   
+
             return 0;
         }
     }
@@ -224,3 +226,21 @@ void FourInARow::changePlayer() {
     else 
         playerColor = 'y';
 }
+
+bool FourInARow::isFilled() const {
+    if (cntFilledSlots >= (maxLines * maxRows))
+        return true;
+
+    return false;
+}
+
+int FourInARow::setCntFilledSlots(const unsigned newCnt) {
+    cntFilledSlots = newCnt;
+
+    return 0;
+}
+
+unsigned FourInARow::getCntFilledSlots() const {
+    return cntFilledSlots;
+}
+

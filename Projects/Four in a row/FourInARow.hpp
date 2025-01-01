@@ -12,6 +12,7 @@ private: // ********* variables ********* //
     
     char field[maxLines][maxRows];
     Position pos{maxRows};
+    unsigned cntFilledSlots = 0;
 
 public:
     
@@ -46,4 +47,10 @@ public:
     bool isVictory() const; // check if the current player won
 
     void changePlayer();
+
+    bool isFilled() const;
+
+    int setCntFilledSlots(const unsigned newCnt);
+
+    unsigned getCntFilledSlots() const;
 };
