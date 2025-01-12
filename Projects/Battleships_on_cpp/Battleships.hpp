@@ -4,6 +4,7 @@
 #include "Position.hpp"
 #include "Ship.hpp"
 #include <vector>
+#include <array>
 
 const size_t MAXLINES = 10;
 const size_t MAXROWS = MAXLINES;
@@ -11,9 +12,9 @@ const size_t MAXROWS = MAXLINES;
 class Battleships {
 private: // *** private variables *** //
     // creating fields for players
-    char field1[MAXLINES][MAXROWS];
+    std::array<std::array<char, MAXROWS>, MAXLINES> field1 = {};
     Position posF1{MAXLINES, MAXROWS, {5, 5}};
-    char field2[MAXLINES][MAXROWS];
+    std::array<std::array<char, MAXROWS>, MAXLINES> field2 = {};
     Position posF2{MAXLINES, MAXROWS, {5, 5}};
 
     const bool botActive = false;
@@ -24,31 +25,31 @@ public: // *** public variables *** //
 
 private: // *** private Methods def. *** //
 
-    void fillField(char field[MAXLINES][MAXROWS], char sym);
+    void fillField(std::array<std::array<char, MAXROWS>, MAXLINES>& field, char sym);
     
     // * output part * // 
     void outputColumn(size_t lenght, bool withLetters);
 
-    void outputFieldHiddenShips(char field[MAXLINES][MAXROWS]);  // needed at stage: battle
+    void outputFieldHiddenShips(std::array<std::array<char, MAXROWS>, MAXLINES>& field);  // needed at stage: battle
 
-    void outputField(char field[MAXLINES][MAXROWS]); // needed at stage: placeShips
+    void outputField(std::array<std::array<char, MAXROWS>, MAXLINES>& field); // needed at stage: placeShips
 
     // * field editing * //
-    int putShipByPosForOutput(char field[MAXLINES][MAXROWS], Position pos, size_t shipIdx, const char shipDirection); // colors the field to see where our current ship is for output 
+    int putShipByPosForOutput(std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, size_t shipIdx, const char shipDirection); // colors the field to see where our current ship is for output 
     
     // * moving cursor * //
-    bool changePosAllowed(const char field[MAXLINES][MAXROWS], Position pos, size_t shipIdx, const char shipDirection);
+    bool changePosAllowed(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, size_t shipIdx, const char shipDirection);
 
-    void changePos(char field[MAXLINES][MAXROWS], Position& pos, const char arrow, const char shipDirection, const size_t curShipIdx); // moves the cursor if allowed
+    void changePos(std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position& pos, const char arrow, const char shipDirection, const size_t curShipIdx); // moves the cursor if allowed
 
     // * changing ships position * //
-    bool changeShipsDirectionAllowed(const char field[MAXLINES][MAXROWS], Position pos, char shipDirection, const size_t curShipIdx);
+    bool changeShipsDirectionAllowed(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, char shipDirection, const size_t curShipIdx);
     
-    void changeShipsDirection(const char field[MAXLINES][MAXROWS], const Position& pos, char& shipDirection, const size_t curShipIdx);
+    void changeShipsDirection(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, const Position& pos, char& shipDirection, const size_t curShipIdx);
     
-    bool shipInTheWay(const char field[MAXLINES][MAXROWS], Position pos, const char shipDirection, const size_t curShipIdx);
+    bool shipInTheWay(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, const char shipDirection, const size_t curShipIdx);
 
-    int placeShipsOnField(char field[MAXLINES][MAXROWS], const std::vector<Ship>& ships);
+    int placeShipsOnField(std::array<std::array<char, MAXROWS>, MAXLINES>& field, const std::vector<Ship>& ships);
 
     
 
@@ -66,7 +67,7 @@ public: // *** public Methods def. *** ///
 
     int battle();
 
-    int isVictory() const;
+    bool isVictory() const;
 
 
 // * get Methods  * //

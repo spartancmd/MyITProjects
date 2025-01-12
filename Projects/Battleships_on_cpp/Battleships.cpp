@@ -11,7 +11,7 @@
 
 // ***** def. private Methods ***** //
 
-void Battleships::fillField(char field[MAXLINES][MAXROWS], char sym) {
+void Battleships::fillField(std::array<std::array<char, MAXROWS>, MAXLINES>& field, char sym) {
     for (size_t line = 0; line < MAXLINES; line++)
         for (size_t row = 0; row < MAXROWS; row++) 
             field[line][row] = sym;
@@ -34,7 +34,7 @@ void Battleships::outputColumn(size_t lenght, bool withLetters=true) {
     std::cout << ConsoleOp::setBackgroundColor(0) << std::endl;
 }
 
-void Battleships::outputFieldHiddenShips(char field[MAXLINES][MAXROWS]) {
+void Battleships::outputFieldHiddenShips(std::array<std::array<char, MAXROWS>, MAXLINES>& field) {
     char columnColor = 'b'; // blue
     char standartColor = 'w';
     char hitColor = 'r'; // red
@@ -64,7 +64,7 @@ void Battleships::outputFieldHiddenShips(char field[MAXLINES][MAXROWS]) {
     }
 }
 
-void Battleships::outputField(char field[MAXLINES][MAXROWS]) {
+void Battleships::outputField(std::array<std::array<char, MAXROWS>, MAXLINES>& field) {
     char columnColor = 'b'; // blue
     char shipColor = 'B'; // black
     char standardColor = 'w';   // white
@@ -91,7 +91,7 @@ void Battleships::outputField(char field[MAXLINES][MAXROWS]) {
     }
 }
 
-int Battleships::putShipByPosForOutput(char field[MAXLINES][MAXROWS], Position pos, size_t shipIdx, const char shipDirection) {
+int Battleships::putShipByPosForOutput(std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, size_t shipIdx, const char shipDirection) {
     const size_t shipLength = ships[shipIdx].size;
 
     if (shipDirection == 'h' && (pos.row + shipLength > MAXROWS)) return -1; // Out of bounds
@@ -105,7 +105,7 @@ int Battleships::putShipByPosForOutput(char field[MAXLINES][MAXROWS], Position p
     return 0;
 }
 
-bool Battleships::changePosAllowed(const char field[MAXLINES][MAXROWS], Position pos, size_t shipIdx, const char shipDirection) {
+bool Battleships::changePosAllowed(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, size_t shipIdx, const char shipDirection) {
     const size_t shipLenght = ships[shipIdx].size;
 
     // we look at the case where the cursor gets moved down or right to decide if allowed. So we increase the variable of position
@@ -123,7 +123,7 @@ bool Battleships::changePosAllowed(const char field[MAXLINES][MAXROWS], Position
     return true;
 }
 
-void Battleships::changePos(char field[MAXLINES][MAXROWS], Position& pos, const char arrow, const char shipDirection, const size_t curShipIdx) {
+void Battleships::changePos(std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position& pos, const char arrow, const char shipDirection, const size_t curShipIdx) {
         switch(arrow) {
             case 72: // arrow - up
                 pos.line--;
@@ -143,7 +143,7 @@ void Battleships::changePos(char field[MAXLINES][MAXROWS], Position& pos, const 
 }
 
 
-bool Battleships::changeShipsDirectionAllowed(const char field[MAXLINES][MAXROWS], Position pos, char shipDirection, const size_t curShipIdx) {
+bool Battleships::changeShipsDirectionAllowed(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, char shipDirection, const size_t curShipIdx) {
     const size_t shipLenght = ships[curShipIdx].size;
     
     // check if the new direction of the ship is out of field
@@ -155,7 +155,7 @@ bool Battleships::changeShipsDirectionAllowed(const char field[MAXLINES][MAXROWS
     return true;
 }
 
-void Battleships::changeShipsDirection(const char field[MAXLINES][MAXROWS], const Position& pos, char& shipDirection, const size_t curShipIdx) {
+void Battleships::changeShipsDirection(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, const Position& pos, char& shipDirection, const size_t curShipIdx) {
     switch (shipDirection) {
         case 'v':
             if (changeShipsDirectionAllowed(field, pos, shipDirection, curShipIdx))
@@ -168,7 +168,7 @@ void Battleships::changeShipsDirection(const char field[MAXLINES][MAXROWS], cons
     }
 }
 
-bool Battleships::shipInTheWay(const char field[MAXLINES][MAXROWS], Position pos, const char shipDirection, const size_t curShipIdx) {
+bool Battleships::shipInTheWay(const std::array<std::array<char, MAXROWS>, MAXLINES>& field, Position pos, const char shipDirection, const size_t curShipIdx) {
     size_t shipLenght = ships[curShipIdx].size;
 
     if (shipDirection == 'v') {
@@ -192,18 +192,18 @@ bool Battleships::shipInTheWay(const char field[MAXLINES][MAXROWS], Position pos
     return false;
 }
 
-int Battleships::placeShipsOnField(char field[MAXLINES][MAXROWS], const std::vector<Ship>& ships) {
+int Battleships::placeShipsOnField(std::array<std::array<char, MAXROWS>, MAXLINES>& field, const std::vector<Ship>& ships) {
     char key1 = 0;
     char shipDirection = 'h'; // h - horizontal; v - vertical
     Position pos{MAXLINES, MAXROWS, {5, 5}};
     size_t curShipIdx = 0;
     
-    char fieldBfr[MAXLINES][MAXROWS];
-    memcpy(fieldBfr, field, sizeof(field));
+    std::array<std::array<char, MAXROWS>, MAXLINES> fieldBfr;
+    
 
     size_t n = ships.size();
     while (curShipIdx < n) {
-        memcpy(fieldBfr, field, sizeof(field)); // reseting the fieldBuffer to actuall field everytime
+        fieldBfr = field; // reseting the fieldBuffer to actuall field everytime
         putShipByPosForOutput(fieldBfr, pos, curShipIdx, shipDirection); // colors the field to see where our current ship is for output 
 
         std::cout << ConsoleOp::clearConsole() << ConsoleOp::setFontColor(curPlayer) << "Place your " << ships[curShipIdx].name << " by pressing SPACE\nTAB to change shipsDirection\tq - to leave" << ConsoleOp::setFontColor(0) << std::endl;
@@ -217,7 +217,7 @@ int Battleships::placeShipsOnField(char field[MAXLINES][MAXROWS], const std::vec
                 break;
             case ' ': // SPACE to put the ship
                 if (!shipInTheWay(field, pos, shipDirection, curShipIdx)) { // this time using field instead of fieldBfr
-                    memcpy(field, fieldBfr, sizeof(fieldBfr)); // copy the current buffer to the actuall field
+                    field = fieldBfr; // copy the current buffer to the actuall field
                     curShipIdx++;
                 }
                 break;
@@ -285,11 +285,11 @@ int Battleships::placeShipsOnField(char field[MAXLINES][MAXROWS], const std::vec
     }
 
     int Battleships::battle() {
-
+        return 0;
     }
 
-    int Battleships::isVictory() const {
-
+    bool Battleships::isVictory() const {
+        return false;
     }
 
 
