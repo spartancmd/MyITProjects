@@ -1,12 +1,14 @@
 #pragma once
 
+#include <vector>
+#include <mutex>
 #include "Account.hpp"
 
 const int accountCnt = 3;
 
 class Bank {
-    
-    Account account[accountCnt];    
+    Account account[accountCnt]; 
+
 public:
 
     Bank();
