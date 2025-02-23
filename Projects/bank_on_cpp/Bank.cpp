@@ -7,7 +7,6 @@ Bank::Bank()
 // = количество денег на счету с индексом index
 int Bank::getAmount(int index) {
     std::unique_lock lock{account[index].locker};
-    lock.lock();
 
     return account[index].balance;
 }
@@ -35,7 +34,6 @@ int Bank::totalAmount() {
 // returns how much money was added
 int Bank::deposit(int index, int amount) {
     std::unique_lock lock{account[index].locker};
-    lock.lock();
 
     account[index].balance += amount;
     return amount;
@@ -45,7 +43,6 @@ int Bank::deposit(int index, int amount) {
 // return how much money was taken
 int Bank::withdraw(int index, int amount) {
     std::unique_lock lock{account[index].locker};
-    lock.lock();
 
     account[index].balance -= amount;
     return amount;
@@ -54,10 +51,15 @@ int Bank::withdraw(int index, int amount) {
 // - перевести деньги со счёта на счёт
 // return how much money transfered
 int Bank::transfer(int toIndex, int fromIndex, int amount) {
-    std::unique_lock lock1{account[fromIndex].locker};
-    std::unique_lock lock2{account[toIndex].locker};
-    lock1.lock();
-    lock2.lock();
+    // to avoid dead lock, organizing a hyrarchie by going from smallest to greatest index
+    if (fromIndex < toIndex) {
+        std::unique_lock lock1{account[fromIndex].locker};
+        std::unique_lock lock2{account[toIndex].locker};
+    }
+    else {
+        std::unique_lock lock1{account[toIndex].locker};
+        std::unique_lock lock2{account[fromIndex].locker};
+    }
 
     account[fromIndex].balance -= amount;
     account[toIndex].balance += amount;
