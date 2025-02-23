@@ -1,8 +1,8 @@
 #pragma once 
 
-#include <mutex>
+#include <shared_mutex>
 
 struct Account {
     int balance = 0;
-    std::mutex locker;
+    std::shared_mutex locker;
 };
