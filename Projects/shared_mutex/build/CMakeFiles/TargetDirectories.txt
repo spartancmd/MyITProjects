@@ -1,0 +1,6 @@
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/CMakeFiles/test.dir
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/CMakeFiles/edit_cache.dir
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/CMakeFiles/rebuild_cache.dir
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/lib/CMakeFiles/shared_mutex.dir
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/lib/CMakeFiles/edit_cache.dir
+/home/deniel/desktop/git_repos/MyITProjects/Projects/shared_mutex/build/lib/CMakeFiles/rebuild_cache.dir
